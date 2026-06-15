@@ -10,7 +10,7 @@ import type { Employee } from '@/types'
 import type { WeekDayLabel } from '@/lib/weekUtils'
 import { saveAttendanceRecord } from '@/lib/attendanceOps'
 import { useToast } from '@/contexts/ToastContext'
-
+import { sendTelegramNotification } from '@/lib/telegramNotify'
 type AttendanceModalProps = {
   open: boolean
   onClose: () => void
@@ -99,6 +99,7 @@ export function AttendanceModal({
         checkOut24: checkOut,
         existingId,
       })
+      void sendTelegramNotification(`✅ ${employee.name}\n📅 ${formatDateEn(rowDate)} — ${weekdayLabel}\n⏰ دخول: ${checkIn} | خروج: ${checkOut}`)
       toast.success()
       onSaved()
       onClose()
