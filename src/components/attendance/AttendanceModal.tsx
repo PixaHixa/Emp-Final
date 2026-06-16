@@ -99,7 +99,8 @@ export function AttendanceModal({
         checkOut24: checkOut,
         existingId,
       })
-      void sendTelegramNotification(`✅ ${employee.name}\n📅 ${formatDateEn(rowDate)} — ${weekdayLabel}\n⏰ دخول: ${checkIn} | خروج: ${checkOut}`)
+      const type = checkOut === '18:00' && !initialCheckOut ? '✅ حضور' : '🚪 مغادرة'
+void sendTelegramNotification(`${type}\n👤 ${employee.name}\n📅 ${formatDateEn(rowDate)} — ${weekdayLabel}\n⏰ ${type === '✅ حضور' ? checkIn : checkOut}`)
       toast.success()
       onSaved()
       onClose()
